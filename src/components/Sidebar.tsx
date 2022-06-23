@@ -1,9 +1,9 @@
-import { gql, useQuery } from "@apollo/client";
-import { Lesson } from "./Lesson";
+import { gql, useQuery } from '@apollo/client'
+import { Lesson } from './Lesson'
 
 const GET_LESSON_QUERY = gql`
   {
-    lessons(orderBy: availableAt_ASC, stage: PUBLISHED) {
+    lessons(stage: PUBLISHED, orderBy: order_ASC) {
       id
       slug
       title
@@ -11,10 +11,10 @@ const GET_LESSON_QUERY = gql`
       lessonType
     }
   }
-`;
+`
 
 export function Sidebar() {
-  const { data } = useQuery<GetLessonsQueryResponse>(GET_LESSON_QUERY);
+  const { data } = useQuery<GetLessonsQueryResponse>(GET_LESSON_QUERY)
 
   return (
     <aside className="w-[348px] bg-gray-700 p-6 border-l border-gray-600">
@@ -23,7 +23,7 @@ export function Sidebar() {
       </span>
 
       <div className="flex flex-col gap-8">
-        {data?.lessons.map((lesson) => {
+        {data?.lessons.map(lesson => {
           return (
             <Lesson
               key={lesson.id}
@@ -32,9 +32,9 @@ export function Sidebar() {
               availableAt={new Date(lesson.availableAt)}
               type={lesson.lessonType}
             />
-          );
+          )
         })}
       </div>
     </aside>
-  );
+  )
 }
