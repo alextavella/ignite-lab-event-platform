@@ -7,7 +7,7 @@ type Params = {
   slug: string
 }
 
-export function Event() {
+export function Events() {
   const { slug } = useParams<Params>()
 
   return (
