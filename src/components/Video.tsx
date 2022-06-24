@@ -1,11 +1,16 @@
+import { gql, useQuery } from '@apollo/client'
 import { DefaultUi, Player, Youtube } from '@vime/react'
-import { CaretRight, DiscordLogo, FileArrowDown, Lightning } from 'phosphor-react'
+import {
+  CaretRight,
+  DiscordLogo,
+  FileArrowDown,
+  Lightning,
+} from 'phosphor-react'
 
 // Default theme. ~960B
-import '@vime/core/themes/default.css';
+import '@vime/core/themes/default.css'
 // Optional light theme (extends default). ~400B
-import '@vime/core/themes/light.css';
-import { gql, useQuery } from '@apollo/client';
+import '@vime/core/themes/light.css'
 
 interface VideoProps {
   slug: string
@@ -27,7 +32,7 @@ interface GetLessonBySlugResponse {
 
 const GET_LESSON_BY_SLUG = gql`
   query GetLessonBySlug($slug: String) {
-    lesson(where: {slug: $slug}) {
+    lesson(where: { slug: $slug }) {
       id
       title
       videoId
@@ -42,16 +47,19 @@ const GET_LESSON_BY_SLUG = gql`
 `
 
 export function Video({ slug }: VideoProps) {
-  const { data, loading } = useQuery<GetLessonBySlugResponse>(GET_LESSON_BY_SLUG, {
-    variables: {
-      slug
+  const { data, loading } = useQuery<GetLessonBySlugResponse>(
+    GET_LESSON_BY_SLUG,
+    {
+      variables: {
+        slug,
+      },
     }
-  })
+  )
 
   if (loading || !data) {
     return (
       <div className="flex-1 items-center justify-center">
-        <p className='text-gray-500'>Carregando...</p>
+        <p className="text-gray-500">Carregando...</p>
       </div>
     )
   }
@@ -70,18 +78,24 @@ export function Video({ slug }: VideoProps) {
       <div className="p-8 max-w-[1100px] mx-auto">
         <div className="flex items-start gap-16">
           <div className="flex-1">
-            <h1 className="text-2xl font-bold">
-              {data.lesson.title}
-            </h1>
+            <h1 className="text-2xl font-bold">{data.lesson.title}</h1>
             <p className="mt-4 text-gray-200 leading-relaxed">
               {data.lesson.description}
             </p>
 
             <div className="flex items-center gap-4 mt-6">
-              <img src={data.lesson.teacher.avatarURL} alt="Alex Tavella" className='h-16 w-16 rounded-full border-2 border-blue-500' />
-              <div className='leading-relaxed'>
-                <strong className='font-bold text-2xl block'>{data.lesson.teacher.name}</strong>
-                <span className='text-gray-200 text-sm block'>{data.lesson.teacher.bio}</span>
+              <img
+                src={data.lesson.teacher.avatarURL}
+                alt="Alex Tavella"
+                className="h-16 w-16 rounded-full border-2 border-blue-500"
+              />
+              <div className="leading-relaxed">
+                <strong className="font-bold text-2xl block">
+                  {data.lesson.teacher.name}
+                </strong>
+                <span className="text-gray-200 text-sm block">
+                  {data.lesson.teacher.bio}
+                </span>
               </div>
             </div>
           </div>
@@ -104,29 +118,41 @@ export function Video({ slug }: VideoProps) {
           </div>
         </div>
 
-        <div className='gap-8 mt-20 grid grid-cols-2'>
-          <a href="#" className='bg-gray-700 rounded overflow-hidden flex items-stretch gap-6 hover:bg-gray-600 transition-colors'>
-            <div className='bg-green-700 h-full p-6 flex items-center'>
+        <div className="gap-8 mt-20 grid grid-cols-2">
+          <a
+            href="#"
+            className="bg-gray-700 rounded overflow-hidden flex items-stretch gap-6 hover:bg-gray-600 transition-colors"
+          >
+            <div className="bg-green-700 h-full p-6 flex items-center">
               <FileArrowDown size={40} />
             </div>
-            <div className='py-6 leading-relaxed'>
-              <strong className='text-2xl'>Material complementar</strong>
-              <p className='text-sm text-gray-200 mt-2'>Acesse o material complementar para acelerar o seu desenvolvimento</p>
+            <div className="py-6 leading-relaxed">
+              <strong className="text-2xl">Material complementar</strong>
+              <p className="text-sm text-gray-200 mt-2">
+                Acesse o material complementar para acelerar o seu
+                desenvolvimento
+              </p>
             </div>
-            <div className='h-full p-6 flex items-center'>
+            <div className="h-full p-6 flex items-center">
               <CaretRight size={24} />
             </div>
           </a>
 
-          <a href="#" className='bg-gray-700 rounded overflow-hidden flex items-stretch gap-6 hover:bg-gray-600 transition-colors'>
-            <div className='bg-green-700 h-full p-6 flex items-center'>
+          <a
+            href="#"
+            className="bg-gray-700 rounded overflow-hidden flex items-stretch gap-6 hover:bg-gray-600 transition-colors"
+          >
+            <div className="bg-green-700 h-full p-6 flex items-center">
               <FileArrowDown size={40} />
             </div>
-            <div className='py-6 leading-relaxed'>
-              <strong className='text-2xl'>Wallpapers exclusivos</strong>
-              <p className='text-sm text-gray-200 mt-2'>Baixe wallpapers exclusivos do Ignite Lab e personalize a sua máquina</p>
+            <div className="py-6 leading-relaxed">
+              <strong className="text-2xl">Wallpapers exclusivos</strong>
+              <p className="text-sm text-gray-200 mt-2">
+                Baixe wallpapers exclusivos do Ignite Lab e personalize a sua
+                máquina
+              </p>
             </div>
-            <div className='h-full p-6 flex items-center'>
+            <div className="h-full p-6 flex items-center">
               <CaretRight size={24} />
             </div>
           </a>
