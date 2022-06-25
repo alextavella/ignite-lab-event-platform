@@ -1,34 +1,12 @@
-import { gql, useMutation } from '@apollo/client'
 import { FormEvent, useCallback, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useCreateSubscriberMutation } from '../graphql/generated'
 import { Logo } from '../icons/Logo'
-
-interface CreateSubscriberResponse {
-  lesson: {
-    id: string
-    title: string
-    videoId: string
-    description: string
-    teacher: {
-      avatarURL: string
-      bio: string
-      name: string
-    }
-  }
-}
-
-const CREATE_SUBSCRIBER_MUTATION = gql`
-  mutation CreateSubscriber($name: String!, $email: String!) {
-    createSubscriber(data: {name: $name, email: $email}) {
-      id
-    }
-  }
-`
 
 export function Subscribe() {
   const navigate = useNavigate()
 
-  const [createSubscriber, { loading }] = useMutation<CreateSubscriberResponse>(CREATE_SUBSCRIBER_MUTATION)
+  const [createSubscriber, { loading }] = useCreateSubscriberMutation()
 
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -39,8 +17,8 @@ export function Subscribe() {
     await createSubscriber({
       variables: {
         name,
-        email
-      }
+        email,
+      },
     })
 
     navigate('/eventos')
@@ -74,7 +52,7 @@ export function Subscribe() {
               className="bg-gray-900 rounded px-5 h-14 disabled:opacity-50"
               disabled={loading}
               value={name}
-              onChange={(event) => setName(event.target.value)}
+              onChange={event => setName(event.target.value)}
             />
             <input
               type="email"
@@ -82,13 +60,14 @@ export function Subscribe() {
               className="bg-gray-900 rounded px-5 h-14 disabled:opacity-50"
               disabled={loading}
               value={email}
-              onChange={(event) => setEmail(event.target.value)}
+              onChange={event => setEmail(event.target.value)}
             />
             <button
               type="submit"
-              className='mt-4 bg-green-500 uppercase py-4 rounded font-bold text-small hover:bg-green-700 transition-colors disabled:opacity-50'
+              className="mt-4 bg-green-500 uppercase py-4 rounded font-bold text-small hover:bg-green-700 transition-colors disabled:opacity-50"
               disabled={loading}
-              onClick={handleSubscribe}>
+              onClick={handleSubscribe}
+            >
               Garantir minha vaga
             </button>
           </form>
