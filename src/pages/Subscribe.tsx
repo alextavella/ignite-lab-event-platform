@@ -11,18 +11,21 @@ export function Subscribe() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
 
-  const handleSubscribe = useCallback(async (event: FormEvent) => {
-    event.preventDefault()
+  const handleSubscribe = useCallback(
+    async (event: FormEvent) => {
+      event.preventDefault()
 
-    await createSubscriber({
-      variables: {
-        name,
-        email,
-      },
-    })
+      await createSubscriber({
+        variables: {
+          name,
+          email,
+        },
+      })
 
-    navigate('/eventos')
-  }, [])
+      navigate('/eventos')
+    },
+    [name, email]
+  )
 
   return (
     <div className="min-h-screen bg-blur bg-cover bg-no-repeat flex flex-col items-center">
